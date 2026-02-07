@@ -63,5 +63,18 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
 
+  spark:
+    image: apache/spark:3.5.1
+    container_name: spark
+    user: "0:0"
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "--host", "0.0.0.0", "--port", "7077", "--webui-port", "8080"]
+    volumes:
+      - ./:/workspace
+      - spark_ivy:/home/spark/.ivy2
+
 volumes:
   minio_data:
+  spark_ivy:
