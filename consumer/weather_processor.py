@@ -12,7 +12,7 @@ KAFKA_SERVER = "kafka:9092"
 MINIO_ENDPOINT = "minio:9000"
 MINIO_ACCESS_KEY = "minioadmin"
 MINIO_SECRET_KEY = "minioadmin"
-PROCESSED_BUCKET = "weather-processe"
+PROCESSED_BUCKET = "weather-processed"
 
 consumer = KafkaConsumer(
     KAFKA_TOPIC,
