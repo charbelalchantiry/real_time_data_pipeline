@@ -6,7 +6,7 @@ from kafka import KafkaProducer
 API_KEY = "81cfcaf709b50c2093bd784c4bfee544" 
 CITY = "Beirut"
 KAFKA_TOPIC = "weather_raw"
-KAFKA_SERVER = "localhost:9092"
+KAFKA_SERVER = "kafka:9092"
 
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_SERVER,

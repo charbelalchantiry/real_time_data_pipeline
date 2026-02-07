@@ -6,13 +6,12 @@ from datetime import datetime, timezone
 
 # Kafka config
 KAFKA_TOPIC = "weather_raw"
-KAFKA_SERVER = "localhost:9092"
+KAFKA_SERVER = "kafka:9092"
 
 # MinIO config
-MINIO_ENDPOINT = "localhost:9000"
+MINIO_ENDPOINT = "minio:9000"
 MINIO_ACCESS_KEY = "minioadmin"
 MINIO_SECRET_KEY = "minioadmin"
-RAW_BUCKET = "weather-raw"
 PROCESSED_BUCKET = "weather-processed"
 
 consumer = KafkaConsumer(

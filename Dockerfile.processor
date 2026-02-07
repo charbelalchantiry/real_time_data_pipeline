@@ -1,0 +1,9 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY consumer/weather_processor.py .
+
+RUN pip install kafka-python minio
+
+CMD ["python", "weather_processor.py"]

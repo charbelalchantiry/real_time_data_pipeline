@@ -1,0 +1,9 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY producer/weather_producer.py .
+
+RUN pip install kafka-python requests
+
+CMD ["python", "weather_producer.py"]

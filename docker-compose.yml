@@ -19,8 +19,14 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "kafka-topics --bootstrap-server localhost:9092 --list >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
 
   minio:
     image: minio/minio
@@ -32,3 +38,30 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.producer
+    container_name: weather_producer
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  processor:
+    build:
+      context: .
+      dockerfile: Dockerfile.processor
+    container_name: weather_processor
+    depends_on:
+      - kafka
+      - minio
+    environment:
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  minio_data:
