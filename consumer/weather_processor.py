@@ -55,7 +55,7 @@ for message in consumer:
     year = now.strftime("%Y")
     month = now.strftime("%m")
     day = now.strftime("%d")
-    time_part = now.strftime("%H%M%S")
+    time_part = now.strftime("%H%M%S_%f")
 
     filename = f"year={year}/month={month}/day={day}/processed_weather_{time_part}.json"
 

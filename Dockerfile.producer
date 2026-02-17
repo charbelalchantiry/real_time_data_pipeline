@@ -1,9 +1,11 @@
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY producer/weather_producer.py .
+# install only what your scripts need
+RUN pip install --no-cache-dir kafka-python minio requests
 
-RUN pip install kafka-python requests
+# copy your code (includes weather_producer.py and weather_processor.py)
+COPY . .
 
 CMD ["python", "weather_producer.py"]

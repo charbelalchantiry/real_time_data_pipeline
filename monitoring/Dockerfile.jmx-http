@@ -1,0 +1,12 @@
+FROM eclipse-temurin:11-jre
+
+WORKDIR /opt/jmx
+
+# Standalone HTTP server version (NOT the javaagent)
+ADD https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_httpserver/0.20.0/jmx_prometheus_httpserver-0.20.0.jar /opt/jmx/jmx_httpserver.jar
+
+COPY kafka-jmx-http.yml /opt/jmx/config.yml
+
+EXPOSE 9404
+
+CMD ["java", "-jar", "/opt/jmx/jmx_httpserver.jar", "9404", "/opt/jmx/config.yml"]
